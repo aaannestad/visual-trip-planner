@@ -8,4 +8,7 @@ Rails.application.routes.draw do
 
   resources :trips
 
+  get 'events/new'
+  post '/events/new', to: 'events#create'
+
 end
