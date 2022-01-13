@@ -1,0 +1,6 @@
+<h1><%= @trip.name %></h1>
+ 
+<%= content_tag :div, "", id: "calendar_data", data: {start_date: @trip.startdate.to_s[0,10], end_date: @trip.enddate.tomorrow.to_s[0,10] } do %>
+<% end %>
+
+  <div id="calendar"></div>>

@@ -25,13 +25,13 @@ function loadCalendar() {
     plugins: [timeGridPlugin],
     initialView: 'timeGrid',
       visibleRange: {
-//      start: calendarData.dataset.startDate,
-//      end: calendarData.dataset.endDate
-        start: '2021-11-11',
-        end: '2021-11-16'
+        start: calendarData.dataset.startDate,
+        end: calendarData.dataset.endDate
+//        start: '2021-11-11',
+//        end: '2021-11-16'
       }
   });
-
+  console.log(calendarData.dataset.startDate); //see what's in this element
   calendar.render();
 };
 
