@@ -9,7 +9,7 @@
        <%=f.text_field :name, class:'form-control'%>
        
        <%=f.label :type%>
-       <%=f.text_field :type, class:'form-control'%>
+       <%=f.select :type, options_for_select(["Event", "Stay", "Travel"]), include_blank: "Select a category", class:'form-control'%>
 
        <%=f.label :start_date%>
        <%=f.date_field :start_date, class:'form-control'%>
