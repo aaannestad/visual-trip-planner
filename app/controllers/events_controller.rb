@@ -9,24 +9,43 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = @trip.events.build(event_params) #>.create in the end #event_params is missing trip_id, or something; the event gets built with trip_id: 1
+    @event = @trip.events.build(event_params) 
     if @event.save
       flash[:success] = 'Event created!'
-      redirect_to @trip #currently this gets passed a parameter 1, probably because of the above issue with parameters
+      redirect_to @trip 
     else
       redirect_to root_path
     end
   end
 
-  #TEST ZONE
-  # def index
-  #   event_list = Event.where(trip_id: @trip[:id])
-  #   event_list.to_json
-  # end
+  def index
+    @events = Event.where(trip_id: @trip[:id])
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render :json => event_serialiser(@events)}
+    end
+  end
   
   private
   def event_params
-    params.permit(:title, :kind, :start_date, :end_date, :trip_id)
+    params.permit(:title, :kind, :trip_id, :start_time, :end_time)
   end
 
+  def event_serialiser(events)
+   events.map do |event| 
+    if event.kind == "Stay" #not sure if this'll be by type or by the all_day boolean that no event is using right now
+    {
+      title: event.title,
+      start: event.start_time.to_date.to_s,
+      end: event.end_time.to_date.to_s
+    }
+    else
+    {
+      title: event.title,
+      start: event.start_time.to_date.to_s + "T" + event.start_time.strftime("%H:%M:%S"),
+      end: event.end_time.to_date.to_s + "T" + event.end_time.strftime("%H:%M:%S"),
+    }
+    end
+   end
+  end
 end

@@ -2,7 +2,11 @@
  
 <%= link_to "Make a new event!", new_trip_event_path(@trip) %>
 
-<%= content_tag :div, "", id: "calendar_data", data: {start_date: @trip.startdate.to_s[0,10], end_date: @trip.enddate.tomorrow.to_s[0,10] } do %>
+<script>
+var tripId = <%= @trip.id %>
+</script>
+
+<%= content_tag :div, "", id: "calendar_data", data: {start_date: @trip.start_date.to_date.to_s, end_date: @trip.end_date.tomorrow.to_date.to_s } do %>
 <% end %>
 
   <div id="calendar"></div>>

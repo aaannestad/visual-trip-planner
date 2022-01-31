@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_28_224433) do
+ActiveRecord::Schema.define(version: 2022_01_31_001003) do
 
   create_table "events", force: :cascade do |t|
     t.string "title"
-    t.datetime "start_date"
-    t.datetime "end_date"
     t.boolean "all_day"
     t.string "kind"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "trip_id", null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.index ["trip_id"], name: "index_events_on_trip_id"
   end
 
