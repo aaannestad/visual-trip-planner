@@ -27,10 +27,12 @@ function loadCalendar() {
       visibleRange: {
         start: calendarData.dataset.startDate,
         end: calendarData.dataset.endDate
-//        start: '2021-11-11',
-//        end: '2021-11-16'
       },
-    events: `/trips/${tripId}/events.json` 
+    events: `/trips/${tripId}/events.json`,
+    eventClick : function(info) {
+      var eventObj = info.event;
+      window.location = `/trips/${tripId}/events/${eventObj.id}/edit`
+    }
   });
   console.log(calendarData.dataset.startDate); //see what's in this element
   calendar.render();
