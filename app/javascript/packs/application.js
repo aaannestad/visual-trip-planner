@@ -11,3 +11,31 @@ import "channels"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+import $ from 'jquery';
+require('moment')
+
+import {Calendar} from '@fullcalendar/core'
+import timeGridPlugin from '@fullcalendar/timegrid'
+
+function loadCalendar() {
+  var calendarEl = document.getElementById('calendar');
+  var calendarData = document.getElementById('calendar_data');
+  var calendar = new Calendar(calendarEl, {
+    plugins: [timeGridPlugin],
+    initialView: 'timeGrid',
+      visibleRange: {
+        start: calendarData.dataset.startDate,
+        end: calendarData.dataset.endDate
+      },
+    events: `/trips/${tripId}/events.json`,
+    eventClick : function(info) {
+      var eventObj = info.event;
+      window.location = `/trips/${tripId}/events/${eventObj.id}/edit`
+    }
+  });
+  console.log(calendarData.dataset.startDate); //see what's in this element
+  calendar.render();
+};
+
+$(document).on('turbolinks:load', loadCalendar);

@@ -1,3 +1,11 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  
+  root 'pages#entry'
+  get '/newtrip', to: 'trips#new'
+  post '/newtrip', to: 'trips#create'
+
+  resources :trips do
+    resources :events
+  end
+
 end

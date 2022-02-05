@@ -1,0 +1,23 @@
+<h2>Make a new event!</h2>
+
+<div class='row'>
+  <div class='col-md-6 col-md-offset-3'>
+    <%= form_with(model: @event, local: true, url: trip_events_path) do |f| %>
+   <!--- this is where the error message partial should go ---> 
+
+       <%=f.label :title%>
+       <%=f.text_field :title, class:'form-control'%>
+       
+       <%=f.label :kind%>
+       <%=f.select :kind, options_for_select(["Event", "Stay", "Travel"]), include_blank: "Select a category", class:'form-control'%>
+
+       <%=f.label 'Starts at'%>
+       <%=f.datetime_field :start_time, class:'form-control', min: @trip[:start_date], max: @trip[:end_date]%>
+
+       <%=f.label 'Ends at'%>
+       <%=f.datetime_field :end_time, class:'form-control', min: @trip[:start_date], max: @trip[:end_date]%>
+
+     <%=f.submit "Create event", class: "btn btn-primary"%>
+    <% end %>
+  </div>
+</div>

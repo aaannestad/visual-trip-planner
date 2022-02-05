@@ -1,0 +1,12 @@
+<p> This is a test page.</p>
+
+<a href="/newtrip" class="btn btn-primary" role="button">Make a new trip</a>
+
+<div id='trip-list'>
+  <% Trip.all.each do |t| %>
+    <li>
+     <span class="trip-name"><%= link_to t.name, t %></span>
+     <span class='trip-created'> Created <%= time_ago_in_words(t.created_at)%> ago </span>
+    </li>
+  <% end %>
+</div>
