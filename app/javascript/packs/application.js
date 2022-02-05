@@ -12,7 +12,7 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
-import $ from 'jquery';
+require('jquery')
 require('moment')
 
 import {Calendar} from '@fullcalendar/core'

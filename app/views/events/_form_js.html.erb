@@ -1,0 +1,19 @@
+<%= content_tag :div, "", id: "calendar_data", data: {start_date: @trip.start_date.to_date.to_s, end_date: @trip.end_date.tomorrow.to_date.to_s } do %>
+<% end %>
+
+<script>
+    $("#event_kind").change(function(el) {
+      console.log(el.target.value)
+      if(el.target.value == 'Stay') {
+        // remove time from date selection
+        $("[type='datetime-local']").attr("type", "date");
+        $("[type='date']").attr("min", $("#calendar_data").attr("data-start-date"));
+        $("[type='date']").attr("max", $("#calendar_data").attr("data-end-date"));
+      } else {
+        // add time back into date selection
+        $("[type='date']").attr("type", "datetime-local");
+        $("[type='datetime-local']").attr("min", $("#calendar_data").attr("data-start-date") + "T00:00:00");
+        $("[type='datetime-local']").attr("max", $("#calendar_data").attr("data-end-date") + "T00:00:00");
+      }
+    })
+</script>

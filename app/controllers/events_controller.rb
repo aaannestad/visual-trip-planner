@@ -33,7 +33,6 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
-    debugger
     if @event.update(event_params) #figure out how to not have empty field overwrite preexisting data with nil
       flash[:success] = 'Event updated!'
       redirect_to @trip
@@ -52,8 +51,7 @@ class EventsController < ApplicationController
   
   private
   def event_params
-    # params.require(:event).permit(:id, :title, :kind, :trip_id, :start_time, :end_time)
-    params.permit(:id, :title, :kind, :trip_id, :start_time, :end_time)
+    params.require(:event).permit(:id, :title, :kind, :trip_id, :start_time, :end_time)
   end
 
   def event_serialiser(events)
