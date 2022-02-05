@@ -52,9 +52,6 @@ class EventsController < ApplicationController
   private
   def event_params
     params.require(:event).permit(:id, :title, :kind, :trip_id, :start_time, :end_time)
-    # params.permit(:id, :title, :kind, :trip_id, :start_time, :end_time)
-    # params.require(:event).permit(:id, :title, :kind, :trip_id, :start_time, :end_time)
-    params.permit(:id, :title, :kind, :trip_id, :start_time, :end_time)
   end
 
   def event_serialiser(events)
