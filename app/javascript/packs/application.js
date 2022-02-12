@@ -37,6 +37,7 @@ function CalendarApp() {
          plugins={[ timeGridPlugin ]}
           initialView="timeGrid"
          visibleRange={{start: data.start_date, end: data.end_date}}
+         events={`/trips/${tripId}/events.json`}
         />
       )}
       </div>
