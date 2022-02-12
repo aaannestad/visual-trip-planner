@@ -2,6 +2,7 @@
  
 <%= link_to "Make a new event!", new_trip_event_path(@trip) %>
 
+
 <script>
 var tripId = <%= @trip.id %>
 
@@ -22,4 +23,5 @@ var tripId = <%= @trip.id %>
 <%= content_tag :div, "", id: "calendar_data", data: {start_date: @trip.start_date.to_date.to_s, end_date: @trip.end_date.tomorrow.to_date.to_s } do %>
 <% end %>
 
+<div id="fullcalendar"></div>
   <!--<div id="calendar"></div> -->

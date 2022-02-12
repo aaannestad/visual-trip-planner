@@ -20,11 +20,23 @@ import ReactDOM from 'react-dom'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 
+class CalendarApp extends React.Component {
+  render() {
+    return (
+      <FullCalendar
+        plugins={[ timeGridPlugin ]}
+        initialView="timeGrid"
+      />
+    )
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  const domContainer = document.querySelector('#fullcalendar');
   ReactDOM.render(
-    <p>Hello!</p>,
-    document.body.appendChild(document.createElement('div')),
-  )
+    <CalendarApp/>,
+    domContainer,
+  );
 })
 
 // function loadCalendar() {
