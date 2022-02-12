@@ -22,6 +22,11 @@ class TripsController < ApplicationController
     redirect_to root_path
   end
 
+  def api 
+    @trip = Trip.find_by id: params[:id]
+    render json: @trip
+  end
+
   private
   def trip_params
     params.permit(:name, :start_date, :end_date)

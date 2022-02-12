@@ -26,6 +26,7 @@ class CalendarApp extends React.Component {
       <FullCalendar
         plugins={[ timeGridPlugin ]}
         initialView="timeGrid"
+        visibleRange={{start: '2022-02-05', end: '2022-02-07'}}
       />
     )
   }

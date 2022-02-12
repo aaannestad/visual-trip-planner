@@ -5,23 +5,9 @@
 
 <script>
 var tripId = <%= @trip.id %>
-
-
-// class CalendarTest extends React.Component {
-//   render() {
-//     return (
-//       <FullCalendar
-//         plugins = {[ timeGridPlugin ]}
-//         initialView='timeGrid'
-//       />
-//     )
-//   }
-// }
-
 </script>
 
 <%= content_tag :div, "", id: "calendar_data", data: {start_date: @trip.start_date.to_date.to_s, end_date: @trip.end_date.tomorrow.to_date.to_s } do %>
 <% end %>
 
 <div id="fullcalendar"></div>
-  <!--<div id="calendar"></div> -->
