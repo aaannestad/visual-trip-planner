@@ -17,25 +17,38 @@ require('moment')
 
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 
-class CalendarApp extends React.Component {
-  render() {
-    return (
-      <FullCalendar
-        plugins={[ timeGridPlugin ]}
-        initialView="timeGrid"
-        visibleRange={{start: '2022-02-05', end: '2022-02-07'}}
-      />
+const queryClient = new QueryClient()
+
+function CalendarApp() {
+  
+  const { isLoading, error, data } = useQuery("repoData", () =>
+    fetch(`/trips/${tripId}/api.json`).then((res) => res.json() )
+  );
+
+  return (
+    <div>
+      {isLoading && <h1>loading data</h1>}
+      {!isLoading && (
+       <FullCalendar
+         plugins={[ timeGridPlugin ]}
+          initialView="timeGrid"
+         visibleRange={{start: data.start_date, end: data.end_date}}
+        />
+      )}
+      </div>
     )
-  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const domContainer = document.querySelector('#fullcalendar');
   ReactDOM.render(
-    <CalendarApp/>,
+    <QueryClientProvider client={queryClient}>
+      <CalendarApp/>
+    </QueryClientProvider>,
     domContainer,
   );
 })
