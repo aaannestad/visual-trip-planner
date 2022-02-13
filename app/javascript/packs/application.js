@@ -18,6 +18,7 @@ require('moment')
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import {Modal, Button} from 'antd'
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 
@@ -38,6 +39,14 @@ function CalendarApp() {
           initialView="timeGrid"
          visibleRange={{start: data.start_date, end: data.end_date}}
          events={`/trips/${tripId}/events.json`}
+
+         customButtons={{
+          newEventButton: {
+            text: 'new event',
+            click: () => { console.log('Clicked!') }
+          }
+         }}
+        headerToolbar={{start: 'title', end: 'newEventButton'}}
         />
       )}
       </div>
