@@ -8,4 +8,6 @@ Rails.application.routes.draw do
     resources :events
   end
 
+  get '/trips/:id/api', to: 'trips#api'
+
 end
