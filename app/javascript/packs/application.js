@@ -19,6 +19,7 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import {Modal, Button} from 'antd'
+import 'antd/dist/antd.css';
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
 
@@ -46,9 +47,6 @@ function CalendarApp() {
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
-        Open Modal
-      </Button>
       <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <p>Some contents...</p>
         <p>Some contents...</p>
@@ -66,7 +64,7 @@ function CalendarApp() {
          customButtons={{
           newEventButton: {
             text: 'new event',
-            click: () => { console.log('Clicked!') }
+            click: () => { showModal(); }
           }
          }}
         headerToolbar={{start: 'title', end: 'newEventButton'}}
