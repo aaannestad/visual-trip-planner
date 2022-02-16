@@ -15,7 +15,7 @@ ActiveStorage.start()
 require('jquery')
 require('moment')
 
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import {Modal, Button} from 'antd'
@@ -30,7 +30,30 @@ function CalendarApp() {
     fetch(`/trips/${tripId}/api.json`).then((res) => res.json() )
   );
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   return (
+    <>
+      <Button type="primary" onClick={showModal}>
+        Open Modal
+      </Button>
+      <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
     <div>
       {isLoading && <h1>loading data</h1>}
       {!isLoading && (
@@ -50,6 +73,7 @@ function CalendarApp() {
         />
       )}
       </div>
+      </>
     )
 }
 
