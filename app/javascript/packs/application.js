@@ -13,17 +13,70 @@ Turbolinks.start()
 ActiveStorage.start()
 
 require('jquery')
-require('moment')
+require('moment') // is this even necessary?
 
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
-import {Modal, Button} from 'antd'
+import { QueryClient, QueryClientProvider, useQuery, useMutation } from 'react-query'
+import {Modal, Button, DatePicker, TimePicker, Dropdown, Menu, message} from 'antd'
+import {DownOutlined} from '@ant-design/icons'
 import 'antd/dist/antd.css';
 import FullCalendar from '@fullcalendar/react'
 import timeGridPlugin from '@fullcalendar/timegrid'
+import moment from 'moment';
 
 const queryClient = new QueryClient()
+
+function NewEventForm(){
+  const [event, setEvent ] = useState({
+    type: "event type"
+  });
+  
+  const mutation = useMutation(formData => {
+    return fetch(`/trips/${tripId}/events/new`, formData)
+  }) //I suspect this has to go in the parent function
+
+  // function onOk(value) { // this is for the timepicker
+  //   console.log(moment(value[0]).format('MMMM Do YYYY'));
+  // }
+
+  const menuContent = [
+    'Event', 'Stay', 'Journey'
+  ]
+
+  const updateType = (type) => {
+    setEvent(previousState => {return {...previousState, type: type}})
+  }
+  const onClick = ({key}) => {
+    updateType(menuContent[key]); //oddly this is taking effect *after* the console.log statement
+    console.log(`Clicked on item ${event.type}`);
+  };
+
+  const menu = (
+    <Menu onClick = {onClick}>
+      <Menu.Item key="0">
+        <p>{menuContent[0]}</p>
+      </Menu.Item>
+      <Menu.Item key = "1">
+        <p>{menuContent[1]}</p>
+      </Menu.Item>
+      <Menu.Item key = "2">
+        <p>{menuContent[2]}</p>
+      </Menu.Item>
+    </Menu>
+  );
+
+  return(
+    <div>
+      <Dropdown overlay={menu} trigger={['click']} arrow>
+        <Button>{event.type}</Button>
+      </Dropdown>
+      {event.type == 'Stay' &&
+        <p>You've selected 'stay'.</p>
+      }
+    </div>
+  )
+}
 
 function CalendarApp() {
   
@@ -47,10 +100,8 @@ function CalendarApp() {
 
   return (
     <>
-      <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+      <Modal title="make a new event" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <NewEventForm/>
       </Modal>
     <div>
       {isLoading && <h1>loading data</h1>}
