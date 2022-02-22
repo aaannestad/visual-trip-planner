@@ -40,7 +40,7 @@ function NewEventForm(){
   //   console.log(moment(value[0]).format('MMMM Do YYYY'));
   // }
 
-  const menuContent = [
+  const eventTypes = [
     'Event', 'Stay', 'Journey'
   ]
 
@@ -48,20 +48,20 @@ function NewEventForm(){
     setEvent(previousState => {return {...previousState, type: type}})
   }
   const onClick = ({key}) => {
-    updateType(menuContent[key]); //oddly this is taking effect *after* the console.log statement
+    updateType(eventTypes[key]); //oddly this is taking effect *after* the console.log statement
     console.log(`Clicked on item ${event.type}`);
   };
 
   const menu = (
     <Menu onClick = {onClick}>
       <Menu.Item key="0">
-        <p>{menuContent[0]}</p>
+        <p>{eventTypes[0]}</p>
       </Menu.Item>
       <Menu.Item key = "1">
-        <p>{menuContent[1]}</p>
+        <p>{eventTypes[1]}</p>
       </Menu.Item>
       <Menu.Item key = "2">
-        <p>{menuContent[2]}</p>
+        <p>{eventTypes[2]}</p>
       </Menu.Item>
     </Menu>
   );
@@ -71,7 +71,7 @@ function NewEventForm(){
       <Dropdown overlay={menu} trigger={['click']} arrow>
         <Button>{event.type}</Button>
       </Dropdown>
-      {event.type == 'Stay' &&
+      {event.type == eventTypes[1] &&
         <p>You've selected 'stay'.</p>
       }
     </div>
@@ -92,6 +92,7 @@ function CalendarApp() {
 
   const handleOk = () => {
     setIsModalVisible(false);
+    console.log(`You confirmed ${this}`)
   };
 
   const handleCancel = () => {
