@@ -27,10 +27,11 @@ import moment from 'moment';
 
 const queryClient = new QueryClient()
 
-function NewEventForm(){
-  const [event, setEvent ] = useState({
-    type: "event type"
-  });
+const EVENT_TYPES = [
+  'choose type', 'Event', 'Stay', 'Journey'
+]
+
+function NewEventForm({onChangeEventType, eventType}){
   
   const mutation = useMutation(formData => {
     return fetch(`/trips/${tripId}/events/new`, formData)
@@ -40,39 +41,27 @@ function NewEventForm(){
   //   console.log(moment(value[0]).format('MMMM Do YYYY'));
   // }
 
-  const eventTypes = [
-    'Event', 'Stay', 'Journey'
-  ]
-
-  const updateType = (type) => {
-    setEvent(previousState => {return {...previousState, type: type}})
-  }
-  const onClick = ({key}) => {
-    updateType(eventTypes[key]); //oddly this is taking effect *after* the console.log statement
-    console.log(`Clicked on item ${event.type}`);
-  };
-
   const menu = (
-    <Menu onClick = {onClick}>
-      <Menu.Item key="0">
-        <p>{eventTypes[0]}</p>
-      </Menu.Item>
-      <Menu.Item key = "1">
-        <p>{eventTypes[1]}</p>
-      </Menu.Item>
-      <Menu.Item key = "2">
-        <p>{eventTypes[2]}</p>
-      </Menu.Item>
+    <Menu>
+      {EVENT_TYPES.map((eventType) => (
+        <Menu.Item key={eventType} onClick={() => onChangeEventType(eventType)}>
+          <p>{eventType}</p>
+        </Menu.Item>
+      ))}
     </Menu>
   );
 
   return(
     <div>
       <Dropdown overlay={menu} trigger={['click']} arrow>
-        <Button>{event.type}</Button>
+        <Button>{`${eventType}`}</Button>
       </Dropdown>
-      {event.type == eventTypes[1] &&
-        <p>You've selected 'stay'.</p>
+      {eventType == EVENT_TYPES[1] &&
+        <p>Placeholder event</p> 
+        || eventType == EVENT_TYPES[2] &&
+        <p>Placeholder stay</p>
+        || eventType == EVENT_TYPES[3] &&
+        <p>Placeholder journey</p>
       }
     </div>
   )
@@ -92,17 +81,30 @@ function CalendarApp() {
 
   const handleOk = () => {
     setIsModalVisible(false);
-    console.log(`You confirmed ${this}`)
+    console.log(`You confirmed ${event}`)
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
 
+  const [event, setEvent] = useState({
+    type: EVENT_TYPES[0]
+  })
+
+  const updateEventType = (type) => {
+    setEvent(state => {return {...state, type: type}})
+  }
+
   return (
     <>
       <Modal title="make a new event" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <NewEventForm/>
+        <NewEventForm
+          eventType = {event.type}
+          onChangeEventType = {(eventType) =>{
+            updateEventType(eventType)
+          }}
+        />
       </Modal>
     <div>
       {isLoading && <h1>loading data</h1>}
